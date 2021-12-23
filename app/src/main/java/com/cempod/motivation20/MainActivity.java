@@ -62,25 +62,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomMenu);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        todayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        todayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("TASK", "Задача", false, 999, 0, 0));everydayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("PROGRESS", "Задача", false, 999, 0, 0));
-        everydayList.add(new Task("TASK", "Задача", false, 999, 0, 0));
+
 
 
 addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +127,8 @@ recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
     }
 });
 
-
+ItemListManager manager = new ItemListManager(todayList,everydayList,this);
+manager.refreshLists();
 
 recyclerView.setAdapter(todayAdapter);
 

@@ -2,6 +2,7 @@ package com.cempod.motivation20;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
@@ -52,10 +53,68 @@ Context context;
       db.insert("everydaytask", null, cv);
       dbHelper.close();
 
-      this.everydayList.add(task);
+     
   }
 
+public void refreshLists() {
 
+    String myDate = dateFormat.format(new Date());
+    todayList.clear();
+    everydayList.clear();
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    Cursor c = db.query("daytask", null, "date = ?", new String[]{myDate}, null, null, null);
+
+    if (c.moveToFirst()) {
+
+        int idColIndex = c.getColumnIndex("id");
+        int dateColIndex = c.getColumnIndex("date");
+        int taskColIndex = c.getColumnIndex("task");
+        int isCompleteColIndex = c.getColumnIndex("isComplete");
+        int typeColIndex = c.getColumnIndex("type");
+        int ratingColIndex = c.getColumnIndex("rating");
+        int targetColIndex = c.getColumnIndex("target");
+        int progressColIndex = c.getColumnIndex("progress");
+        do {
+
+
+            boolean isComplete;
+            if (c.getString(isCompleteColIndex).contains("true")) {
+                isComplete = true;
+            } else {
+                isComplete = false;
+            }
+            todayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex)));
+
+        } while (c.moveToNext());
+
+        c = db.query("everydaytask", null, null, null, null, null, null);
+
+        if (c.moveToFirst()) {
+
+            idColIndex = c.getColumnIndex("id");
+            taskColIndex = c.getColumnIndex("task");
+            isCompleteColIndex = c.getColumnIndex("isComplete");
+            typeColIndex = c.getColumnIndex("type");
+            ratingColIndex = c.getColumnIndex("rating");
+            targetColIndex = c.getColumnIndex("target");
+            progressColIndex = c.getColumnIndex("progress");
+            do {
+
+
+                boolean isComplete;
+                if (c.getString(isCompleteColIndex).contains("true")) {
+                    isComplete = true;
+                } else {
+                    isComplete = false;
+                }
+                everydayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex)));
+
+            } while (c.moveToNext());
+
+            dbHelper.close();
+        }
+    }
+}
 
 
 }

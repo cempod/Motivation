@@ -58,7 +58,7 @@ TextInputEditText addProgressEdit;
 
                 }
                 if (type == R.id.action_everyday){
-                    manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0), new Date());
+                    manager.addEverydayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0));
 
                 }
                 onBackPressed();
