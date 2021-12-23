@@ -1,12 +1,18 @@
 package com.cempod.motivation20;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
@@ -46,7 +52,18 @@ public class MainActivity extends AppCompatActivity {
     CircularProgressIndicator taskProgressBar2;
     TextView bottomText;
     Button nonButton;
-       @Override
+    RecyclerView recyclerView;
+    ItemListManager manager;
+
+       ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+               new ActivityResultCallback<ActivityResult>() {
+                   @Override
+                   public void onActivityResult(ActivityResult result) {
+                      manager.refreshLists();
+notifyAdapter(recyclerView);
+
+                   }
+               });
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -60,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         bottomText = (TextView) findViewById(R.id.bottomText);
         nonButton = (Button) findViewById(R.id.nonButton);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomMenu);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
 
 
@@ -68,18 +85,14 @@ public class MainActivity extends AppCompatActivity {
 addTaskButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-        intent.putExtra("Type", bottomNavigationView.getSelectedItemId());
-        Bundle bundle = null;
+
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout2);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                MainActivity.this,
-                Pair.create(addTaskButton, "animbtn")
 
-                );
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,new androidx.core.util.Pair<>(addTaskButton,"animbtn"));
 
-        startActivity(intent, options.toBundle());
+        mStartForResult.launch(new Intent(MainActivity.this, AddTaskActivity.class).putExtra("Type", bottomNavigationView.getSelectedItemId()),optionsCompat);
+
     }
 });
 
@@ -127,7 +140,7 @@ recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
     }
 });
 
-ItemListManager manager = new ItemListManager(todayList,everydayList,this);
+manager = new ItemListManager(todayList,everydayList,this);
 manager.refreshLists();
 
 recyclerView.setAdapter(todayAdapter);
@@ -189,6 +202,13 @@ else{
                 return false;
             }
         });
+    }
+
+    public void notifyAdapter(RecyclerView recyclerView){
+        if(recyclerView.getAdapter()!=null){
+            TransitionManager.beginDelayedTransition(recyclerView);
+recyclerView.getAdapter().notifyDataSetChanged();
+    }
     }
 
     @Override
