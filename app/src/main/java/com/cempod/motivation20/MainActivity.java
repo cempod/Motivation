@@ -101,7 +101,7 @@ addTaskButton.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-        recyclerView.setPaddingRelative(0,300,0,0);
+       // recyclerView.setPaddingRelative(0,300,0,0);
 
       progressCardLayout.post(new Runnable() {
           @Override

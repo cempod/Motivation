@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -18,26 +20,44 @@ TabLayout tabLayout;
 TextInputLayout progressLayout;
 ConstraintLayout addLayout;
 Button addButton;
+RatingBar addRatingBar;
+
+
+int target = 0;
+TextInputEditText addTaskEdit;
+TextInputEditText addProgressEdit;
+    String taskType = "TASK";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        addRatingBar = (RatingBar) findViewById(R.id.addRatingBar);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         addLayout = (ConstraintLayout)findViewById(R.id.addLayout) ;
         progressLayout = (TextInputLayout) findViewById(R.id.progress_layout);
         addButton = (Button) findViewById(R.id.taskAddButton);
+        addTaskEdit = (TextInputEditText) findViewById(R.id.addTaskEdit);
+        addProgressEdit = (TextInputEditText) findViewById(R.id.addProgressEdit);
+        ItemListManager manager = new ItemListManager();
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(tabLayout.getSelectedTabPosition()==1){
+                    target = Integer.parseInt(addProgressEdit.getText().toString());
+                }
+
                 Bundle arguments = getIntent().getExtras();
                 int type = Integer.parseInt(arguments.get("Type").toString());
                 if (type == R.id.action_today){
-                   Toast toast = Toast.makeText(getBaseContext(),"сугодня", Toast.LENGTH_SHORT);
-                toast.show();
+                  manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0));
+
                 }
                 if (type == R.id.action_everyday){
-                    Toast toast = Toast.makeText(getBaseContext(),"каждый день", Toast.LENGTH_SHORT);
-                    toast.show();
+                    manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0));
+
                 }
             }
         });
@@ -47,9 +67,11 @@ Button addButton;
                 if(tab.getPosition()==1){
                     TransitionManager.beginDelayedTransition(addLayout);
                     progressLayout.setVisibility(View.VISIBLE);
+                    taskType = "PROGRESS";
                 }else{
                     TransitionManager.beginDelayedTransition(addLayout);
                     progressLayout.setVisibility(View.GONE);
+                    taskType = "TASK";
                 }
             }
 
