@@ -4,17 +4,17 @@ public class Task {
     private String type;
     private String task;
     private boolean isComplete;
-
+    private String id;
     private int rating;
     private int target;
     private int progress;
     private int index;
 
-    Task(String type, String task,boolean isComplete, int rating, int target , int progress){
+    Task(String type, String task,boolean isComplete, int rating, int target , int progress, String id){
 this.type = type;
         this.task = task;
         this.isComplete = isComplete;
-
+        this.id = id;
         this.rating = rating;
         this.target = target;
         this.progress = progress;
@@ -29,6 +29,10 @@ this.type = type;
 
     public String getType() {
         return this.type;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setType(String type) {

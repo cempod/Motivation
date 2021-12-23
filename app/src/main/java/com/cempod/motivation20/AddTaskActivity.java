@@ -54,11 +54,11 @@ TextInputEditText addProgressEdit;
                 Bundle arguments = getIntent().getExtras();
                 int type = Integer.parseInt(arguments.get("Type").toString());
                 if (type == R.id.action_today){
-                  manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0),new Date());
+                  manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0,""),new Date());
 
                 }
                 if (type == R.id.action_everyday){
-                    manager.addEverydayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0));
+                    manager.addEverydayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0,""));
 
                 }
                 onBackPressed();

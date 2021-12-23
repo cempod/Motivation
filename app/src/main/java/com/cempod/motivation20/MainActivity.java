@@ -92,8 +92,8 @@ addTaskButton.setOnClickListener(new View.OnClickListener() {
           }
       });
 
-RecyclerTaskAdapter todayAdapter = new RecyclerTaskAdapter(todayList, recyclerView);
-RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recyclerView);
+RecyclerTaskAdapter todayAdapter = new RecyclerTaskAdapter(todayList, recyclerView, false);
+RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recyclerView, true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

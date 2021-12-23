@@ -83,7 +83,7 @@ public void refreshLists() {
             } else {
                 isComplete = false;
             }
-            todayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex)));
+            todayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex),c.getString(idColIndex)));
 
         } while (c.moveToNext());
 
@@ -107,7 +107,7 @@ public void refreshLists() {
                 } else {
                     isComplete = false;
                 }
-                everydayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex)));
+                everydayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex),c.getString(idColIndex)));
 
             } while (c.moveToNext());
 
@@ -116,5 +116,15 @@ public void refreshLists() {
     }
 }
 
+public void deleteTask(Task task, boolean everyday){
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    if(everyday){
+        db.delete("everydaytask","id = "+task.getId(),null);
+    }else{
+        db.delete("daytask","id = "+task.getId(),null);
+    }
+    dbHelper.close();
+
+}
 
 }

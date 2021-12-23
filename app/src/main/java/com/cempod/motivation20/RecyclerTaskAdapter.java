@@ -32,10 +32,13 @@ import java.util.List;
 public class RecyclerTaskAdapter extends RecyclerView.Adapter implements ItemTouchHelperAdapter {
 private List<Task> taskList;
 RecyclerView recyclerView;
-    public RecyclerTaskAdapter(List<Task> taskList, RecyclerView recyclerView){
+    ItemListManager manager;
+    boolean everyday;
+    public RecyclerTaskAdapter(List<Task> taskList, RecyclerView recyclerView, boolean everyday){
 this.taskList = taskList;
 this.recyclerView = recyclerView;
-
+this.everyday = everyday;
+        manager = new ItemListManager(recyclerView.getContext());
     }
 
     @Override
@@ -45,8 +48,10 @@ this.recyclerView = recyclerView;
 
     @Override
     public void onItemDismiss(int position) {
-        taskList.remove(position);
+
         notifyItemRemoved(position);
+        manager.deleteTask(taskList.get(position),everyday);
+        taskList.remove(position);
     }
 
     public interface RowType {
