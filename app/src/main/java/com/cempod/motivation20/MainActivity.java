@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
     CircularProgressIndicator taskProgressBar2;
     TextView bottomText;
     Button nonButton;
-    int height ;
-    @Override
+       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -187,7 +186,7 @@ else{
                     }
                     else{
                         TransitionManager.beginDelayedTransition(mainLayout);
-                        recyclerView.setAdapter(todayAdapter);
+                        recyclerView.setAdapter(everydayAdapter);
 
                         topAppbar.setTitle("СЕГОДНЯ");
                         progressCardLayout.setVisibility(View.VISIBLE);
