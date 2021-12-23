@@ -15,6 +15,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Date;
+
 public class AddTaskActivity extends AppCompatActivity {
 TabLayout tabLayout;
 TextInputLayout progressLayout;
@@ -39,7 +41,7 @@ TextInputEditText addProgressEdit;
         addButton = (Button) findViewById(R.id.taskAddButton);
         addTaskEdit = (TextInputEditText) findViewById(R.id.addTaskEdit);
         addProgressEdit = (TextInputEditText) findViewById(R.id.addProgressEdit);
-        ItemListManager manager = new ItemListManager();
+        ItemListManager manager = new ItemListManager(this);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +54,14 @@ TextInputEditText addProgressEdit;
                 Bundle arguments = getIntent().getExtras();
                 int type = Integer.parseInt(arguments.get("Type").toString());
                 if (type == R.id.action_today){
-                  manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0));
+                  manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0),new Date());
 
                 }
                 if (type == R.id.action_everyday){
-                    manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0));
+                    manager.addTodayTask(new Task(taskType, addTaskEdit.getText().toString(),false,(int)(addRatingBar.getRating()*100),target,0), new Date());
 
                 }
+                onBackPressed();
             }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
