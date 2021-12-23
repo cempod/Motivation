@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,10 +58,11 @@ this.recyclerView = recyclerView;
     class SimpleTaskViewHolder extends RecyclerView.ViewHolder{
 
         TextView simpleTaskTitle;
+        RatingBar ratingbar;
 
         public SimpleTaskViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            ratingbar = (RatingBar) itemView.findViewById(R.id.simpleTaskRatingBar);
             simpleTaskTitle = (TextView) itemView.findViewById(R.id.simpleTaskTitle);
         }
     }
@@ -68,9 +70,11 @@ this.recyclerView = recyclerView;
     class ProgressTaskViewHolder extends RecyclerView.ViewHolder{
 
         TextView progressTaskTitle;
+        RatingBar ratingBar;
         CircularProgressIndicator taskProgressBar;
         ConstraintLayout buttonLayout;
         TextInputEditText progressEdit;
+
 
         public ProgressTaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +82,7 @@ this.recyclerView = recyclerView;
             taskProgressBar = (CircularProgressIndicator) itemView.findViewById(R.id.taskProgressBar);
             buttonLayout = (ConstraintLayout) itemView.findViewById(R.id.buttonLayout);
             progressEdit = (TextInputEditText) itemView.findViewById(R.id.progressEdit);
+            ratingBar = (RatingBar) itemView.findViewById(R.id.progressTaskRatingBar);
             AutoTransition autoTransition = new AutoTransition();
             autoTransition.setDuration(200);
 
@@ -165,9 +170,11 @@ if(viewType == RowType.SIMPLE_TASK_TYPE){
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 if(holder instanceof SimpleTaskViewHolder){
     ((SimpleTaskViewHolder)holder).simpleTaskTitle.setText(taskList.get(position).getTask());
+    ((SimpleTaskViewHolder)holder).ratingbar.setRating(taskList.get(position).getRating()/100.f);
 }
 if(holder instanceof ProgressTaskViewHolder){
     ((ProgressTaskViewHolder)holder).progressTaskTitle.setText(taskList.get(position).getTask());
+    ((ProgressTaskViewHolder)holder).ratingBar.setRating(taskList.get(position).getRating()/100.f);
 }
     }
 

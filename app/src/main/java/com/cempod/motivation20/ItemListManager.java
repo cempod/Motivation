@@ -53,7 +53,7 @@ Context context;
       db.insert("everydaytask", null, cv);
       dbHelper.close();
 
-     
+
   }
 
 public void refreshLists() {
