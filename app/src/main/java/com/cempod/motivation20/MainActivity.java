@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout mainLayout;
     ConstraintLayout progressCardLayout;
     ConstraintLayout statsLayout;
+    ConstraintLayout calendarNavigation;
     LinearProgressIndicator taskProgressBar;
     CircularProgressIndicator taskProgressBar2;
     TextView bottomText;
@@ -78,6 +79,7 @@ notifyAdapter(recyclerView);
         nonButton = (Button) findViewById(R.id.nonButton);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomMenu);
         recyclerView = findViewById(R.id.recyclerView);
+        calendarNavigation = (ConstraintLayout) findViewById(R.id.calendarNavigation);
 
 
 
@@ -159,14 +161,14 @@ if(progressCardLayout.getVisibility()==View.VISIBLE)
                     {
                         TransitionManager.beginDelayedTransition(recyclerView);
                         recyclerView.setAdapter(todayAdapter);
-
+                        calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("СЕГОДНЯ");
                         todayAdapter.notifyDataSetChanged();
                     }
 else{
     TransitionManager.beginDelayedTransition(mainLayout);
     recyclerView.setAdapter(todayAdapter);
-
+    calendarNavigation.setVisibility(View.GONE);
     topAppbar.setTitle("СЕГОДНЯ");
     progressCardLayout.setVisibility(View.VISIBLE);
     todayAdapter.notifyDataSetChanged();
@@ -177,24 +179,27 @@ else{
                     if(progressCardLayout.getVisibility()==View.VISIBLE) {
                         TransitionManager.beginDelayedTransition(recyclerView);
                         recyclerView.setAdapter(everydayAdapter);
-
+                        calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
                         everydayAdapter.notifyDataSetChanged();
                     }
                     else{
                         TransitionManager.beginDelayedTransition(mainLayout);
                         recyclerView.setAdapter(everydayAdapter);
+                        calendarNavigation.setVisibility(View.GONE);
 
-                        topAppbar.setTitle("СЕГОДНЯ");
                         progressCardLayout.setVisibility(View.VISIBLE);
+                        topAppbar.setTitle("СЕГОДНЯ");
                         todayAdapter.notifyDataSetChanged();
                     }
                 }
                 if(item.getItemId()==R.id.action_calendar&&bottomNavigationView.getSelectedItemId()!=R.id.action_calendar){
                     item.setChecked(true);
                     TransitionManager.beginDelayedTransition(mainLayout);
+                    topAppbar.setTitle("КАЛЕНДАРЬ");
+                    calendarNavigation.setVisibility(View.VISIBLE);
                     recyclerView.setAdapter(null);
-                    topAppbar.setTitle("");
+
                     progressCardLayout.setVisibility(View.GONE);
                 }
 
