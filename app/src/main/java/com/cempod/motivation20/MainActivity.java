@@ -111,6 +111,7 @@ RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recy
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+
 recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
     @Override
@@ -144,7 +145,7 @@ manager = new ItemListManager(todayList,everydayList,this);
 manager.refreshLists();
 
 recyclerView.setAdapter(todayAdapter);
-
+notifyAdapter(recyclerView);
         MaterialToolbar topAppbar = findViewById(R.id.topAppBar);
         topAppbar.setTitle("СЕГОДНЯ");
 
@@ -208,6 +209,8 @@ else{
         if(recyclerView.getAdapter()!=null){
             TransitionManager.beginDelayedTransition(recyclerView);
 recyclerView.getAdapter().notifyDataSetChanged();
+bottomNavigationView.getOrCreateBadge(R.id.action_today).setNumber(todayList.size());
+bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayList.size());
     }
     }
 
