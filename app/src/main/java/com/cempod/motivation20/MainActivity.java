@@ -208,11 +208,13 @@ else{
                 return false;
             }
         });
+
+
     }
 
     public void notifyAdapter(RecyclerView recyclerView){
         if(recyclerView.getAdapter()!=null){
-            TransitionManager.beginDelayedTransition(recyclerView);
+          //  TransitionManager.beginDelayedTransition(recyclerView);
 recyclerView.getAdapter().notifyDataSetChanged();
 bottomNavigationView.getOrCreateBadge(R.id.action_today).setNumber(todayList.size());
 bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayList.size());
