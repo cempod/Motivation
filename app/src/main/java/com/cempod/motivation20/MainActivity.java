@@ -41,7 +41,9 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Task> todayList = new ArrayList<Task>();
@@ -113,7 +115,7 @@ addTaskButton.setOnClickListener(new View.OnClickListener() {
 
 RecyclerTaskAdapter todayAdapter = new RecyclerTaskAdapter(todayList, recyclerView, false);
 RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recyclerView, true);
-RecyclerCalendarAdapter calendarAdapter = new RecyclerCalendarAdapter(month);
+RecyclerCalendarAdapter calendarAdapter = new RecyclerCalendarAdapter(month, MainActivity.this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -209,10 +211,11 @@ else{
                     recyclerView.setAdapter(calendarAdapter);
                     progressCardLayout.setVisibility(View.GONE);
 
+                    Calendar calendar = new GregorianCalendar();
+                    recyclerView.scrollToPosition(calendar.get(Calendar.DATE)-1);
 
-
-                    Toast toast = Toast.makeText(getApplicationContext(),recyclerView.getAdapter().toString(),Toast.LENGTH_SHORT);
-                    //toast.show();
+                    Toast toast = Toast.makeText(getApplicationContext(),Integer.toString(calendar.get(Calendar.DATE)-1),Toast.LENGTH_SHORT);
+                   // toast.show();
                 }
 
 

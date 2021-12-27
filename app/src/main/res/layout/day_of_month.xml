@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Понедельник"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/dateText"
                 app:layout_constraintStart_toEndOf="@+id/dateText"
                 app:layout_constraintTop_toTopOf="@+id/dateText" />
