@@ -47,10 +47,13 @@ public class RecyclerCalendarAdapter extends RecyclerView.Adapter<RecyclerCalend
             int color = typedValue.data;
             ((DayViewHolder)holder).dateText.setTextColor(color);
             ((DayViewHolder)holder).dayOfWeek.setTextColor(color);
-            
+
         }else{
-            ((DayViewHolder)holder).dateText.setTextColor(Color.BLACK);
-            ((DayViewHolder)holder).dayOfWeek.setTextColor(Color.BLACK);
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.colorOnSurface ,typedValue,true);
+            int color = typedValue.data;
+            ((DayViewHolder)holder).dateText.setTextColor(color);
+            ((DayViewHolder)holder).dayOfWeek.setTextColor(color);
         }
     }
 
