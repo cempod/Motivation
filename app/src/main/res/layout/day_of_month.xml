@@ -31,11 +31,12 @@
 
             <TextView
                 android:id="@+id/dateText"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="27"
-                android:textSize="34sp"
+                android:textAlignment="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Понедельник"
-                android:textSize="16sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/dateText"
                 app:layout_constraintStart_toEndOf="@+id/dateText"
                 app:layout_constraintTop_toTopOf="@+id/dateText" />
