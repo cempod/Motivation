@@ -83,21 +83,22 @@ public void refreshLists() {
             } else {
                 isComplete = false;
             }
-            todayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex),c.getString(idColIndex)));
+            todayList.add(new Task(c.getString(typeColIndex), c.getString(taskColIndex), isComplete, c.getInt(ratingColIndex), c.getInt(targetColIndex), c.getInt(progressColIndex), c.getString(idColIndex)));
 
         } while (c.moveToNext());
+    }
 
         c = db.query("everydaytask", null, null, null, null, null, null);
 
         if (c.moveToFirst()) {
 
-            idColIndex = c.getColumnIndex("id");
-            taskColIndex = c.getColumnIndex("task");
-            isCompleteColIndex = c.getColumnIndex("isComplete");
-            typeColIndex = c.getColumnIndex("type");
-            ratingColIndex = c.getColumnIndex("rating");
-            targetColIndex = c.getColumnIndex("target");
-            progressColIndex = c.getColumnIndex("progress");
+           int idColIndex = c.getColumnIndex("id");
+            int taskColIndex = c.getColumnIndex("task");
+            int isCompleteColIndex = c.getColumnIndex("isComplete");
+            int typeColIndex = c.getColumnIndex("type");
+            int ratingColIndex = c.getColumnIndex("rating");
+            int targetColIndex = c.getColumnIndex("target");
+            int progressColIndex = c.getColumnIndex("progress");
             do {
 
 
@@ -113,7 +114,7 @@ public void refreshLists() {
 
             dbHelper.close();
         }
-    }
+
 }
 
 public void deleteTask(Task task, boolean everyday){
