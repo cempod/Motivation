@@ -9,6 +9,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark"
+        app:elevation="0dp"
+
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -36,7 +49,7 @@
         android:layout_width="match_parent"
 
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomMenu"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
         tools:context=".MainActivity">
 
@@ -239,25 +252,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimaryDark"
-            app:elevation="0dp"
-
-            app:labelVisibilityMode="labeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/menu" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/calendarNavigation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/bottomMenu"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
