@@ -41,10 +41,12 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Task> todayList = new ArrayList<Task>();
     ArrayList<Task> everydayList = new ArrayList<Task>();
+    ArrayList<Day> month = new ArrayList<Day>();
     Button addTaskButton  ;
     BottomNavigationView bottomNavigationView;
     ConstraintLayout progressBarLayout;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     Button nonButton;
     RecyclerView recyclerView;
     ItemListManager manager;
+    CalendarManager calendarManager;
 
        ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                new ActivityResultCallback<ActivityResult>() {
@@ -89,6 +92,7 @@ notifyAdapter(recyclerView);
 
 
 
+
 addTaskButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -105,15 +109,11 @@ addTaskButton.setOnClickListener(new View.OnClickListener() {
 
        // recyclerView.setPaddingRelative(0,300,0,0);
 
-      progressCardLayout.post(new Runnable() {
-          @Override
-          public void run() {
-        recyclerView.setPadding(0,progressBarLayout.getHeight(),0,0);
-          }
-      });
+    setPadding();
 
 RecyclerTaskAdapter todayAdapter = new RecyclerTaskAdapter(todayList, recyclerView, false);
 RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recyclerView, true);
+RecyclerCalendarAdapter calendarAdapter = new RecyclerCalendarAdapter(month);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -136,6 +136,8 @@ recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 });
 
 manager = new ItemListManager(todayList,everydayList,this);
+calendarManager = new CalendarManager(month, recyclerView);
+
 manager.refreshLists();
 
 recyclerView.setAdapter(todayAdapter);
@@ -151,11 +153,12 @@ recyclerView.setAdapter(todayAdapter);
 item.setChecked(true);
 if(progressCardLayout.getVisibility()==View.VISIBLE)
                     {
-                        TransitionManager.beginDelayedTransition(recyclerView);
+                        TransitionManager.beginDelayedTransition(mainLayout);
                         recyclerView.setAdapter(todayAdapter);
                         calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("СЕГОДНЯ");
                         makeBig();
+                        setPadding();
                         notifyAdapter(recyclerView);
                     }
 else{
@@ -164,6 +167,7 @@ else{
     calendarNavigation.setVisibility(View.GONE);
     topAppbar.setTitle("СЕГОДНЯ");
     makeBig();
+    setPadding();
     progressCardLayout.setVisibility(View.VISIBLE);
     notifyAdapter(recyclerView);
 }
@@ -171,14 +175,17 @@ else{
                 if(item.getItemId()==R.id.action_everyday&&bottomNavigationView.getSelectedItemId()!=R.id.action_everyday){
                     item.setChecked(true);
                     if(progressCardLayout.getVisibility()==View.VISIBLE) {
-                        TransitionManager.beginDelayedTransition(recyclerView);
+                        setPadding();
+                        TransitionManager.beginDelayedTransition(mainLayout);
                         recyclerView.setAdapter(everydayAdapter);
                         calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
                         makeBig();
+
                         notifyAdapter(recyclerView);
                     }
                     else{
+                        setPadding();
                         TransitionManager.beginDelayedTransition(mainLayout);
                         recyclerView.setAdapter(everydayAdapter);
                         calendarNavigation.setVisibility(View.GONE);
@@ -186,17 +193,26 @@ else{
                         progressCardLayout.setVisibility(View.VISIBLE);
                         topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
                         makeBig();
+
                         notifyAdapter(recyclerView);
                     }
                 }
                 if(item.getItemId()==R.id.action_calendar&&bottomNavigationView.getSelectedItemId()!=R.id.action_calendar){
                     item.setChecked(true);
                     TransitionManager.beginDelayedTransition(mainLayout);
+
+                            recyclerView.setPadding(0,0,0,0);
+
                     topAppbar.setTitle("КАЛЕНДАРЬ");
                     calendarNavigation.setVisibility(View.VISIBLE);
-                    recyclerView.setAdapter(null);
-
+                    calendarManager.loadMonth(new Date());
+                    recyclerView.setAdapter(calendarAdapter);
                     progressCardLayout.setVisibility(View.GONE);
+
+
+
+                    Toast toast = Toast.makeText(getApplicationContext(),recyclerView.getAdapter().toString(),Toast.LENGTH_SHORT);
+                    //toast.show();
                 }
 
 
@@ -243,6 +259,15 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
         nonButton.setVisibility(View.GONE);
         taskProgressBar.setVisibility(View.GONE);
 
+    }
+
+    public void setPadding(){
+        progressCardLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setPadding(0,progressBarLayout.getHeight(),0,0);
+            }
+        });
     }
 
     private BroadcastReceiver counterReceiver = new BroadcastReceiver() {
