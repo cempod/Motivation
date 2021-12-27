@@ -121,23 +121,10 @@ recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
         super.onScrolled(recyclerView, dx, dy);
 
         if(linearLayoutManager.findFirstVisibleItemPosition() > 1 && taskProgressBar2.getVisibility()==View.VISIBLE){
-
-            //TransitionManager.beginDelayedTransition(progressCardLayout);
-            taskProgressBar.setVisibility(View.VISIBLE);
-            bottomText.setVisibility(View.GONE);
-            taskProgressBar2.setVisibility(View.GONE);
-            statsLayout.setVisibility(View.GONE);
-            nonButton.setVisibility(View.VISIBLE);
-
+            makeCompact();
         }
         if(linearLayoutManager.findFirstVisibleItemPosition() ==0  && taskProgressBar2.getVisibility()==View.GONE){
-           // TransitionManager.beginDelayedTransition(mainLayout);
-            bottomText.setVisibility(View.VISIBLE);
-            taskProgressBar2.setVisibility(View.VISIBLE);
-            statsLayout.setVisibility(View.VISIBLE);
-            nonButton.setVisibility(View.GONE);
-            taskProgressBar.setVisibility(View.GONE);
-
+          makeBig();
         }
 
     }
@@ -147,7 +134,7 @@ manager = new ItemListManager(todayList,everydayList,this);
 manager.refreshLists();
 
 recyclerView.setAdapter(todayAdapter);
-notifyAdapter(recyclerView);
+        notifyAdapter(recyclerView);
         MaterialToolbar topAppbar = findViewById(R.id.topAppBar);
         topAppbar.setTitle("СЕГОДНЯ");
 
@@ -163,15 +150,17 @@ if(progressCardLayout.getVisibility()==View.VISIBLE)
                         recyclerView.setAdapter(todayAdapter);
                         calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("СЕГОДНЯ");
-                        todayAdapter.notifyDataSetChanged();
+                        makeBig();
+                        notifyAdapter(recyclerView);
                     }
 else{
     TransitionManager.beginDelayedTransition(mainLayout);
     recyclerView.setAdapter(todayAdapter);
     calendarNavigation.setVisibility(View.GONE);
     topAppbar.setTitle("СЕГОДНЯ");
+    makeBig();
     progressCardLayout.setVisibility(View.VISIBLE);
-    todayAdapter.notifyDataSetChanged();
+    notifyAdapter(recyclerView);
 }
                 }
                 if(item.getItemId()==R.id.action_everyday&&bottomNavigationView.getSelectedItemId()!=R.id.action_everyday){
@@ -181,7 +170,8 @@ else{
                         recyclerView.setAdapter(everydayAdapter);
                         calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
-                        everydayAdapter.notifyDataSetChanged();
+                        makeBig();
+                        notifyAdapter(recyclerView);
                     }
                     else{
                         TransitionManager.beginDelayedTransition(mainLayout);
@@ -189,8 +179,9 @@ else{
                         calendarNavigation.setVisibility(View.GONE);
 
                         progressCardLayout.setVisibility(View.VISIBLE);
-                        topAppbar.setTitle("СЕГОДНЯ");
-                        todayAdapter.notifyDataSetChanged();
+                        topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
+                        makeBig();
+                        notifyAdapter(recyclerView);
                     }
                 }
                 if(item.getItemId()==R.id.action_calendar&&bottomNavigationView.getSelectedItemId()!=R.id.action_calendar){
@@ -230,5 +221,23 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
     }
 
 
+        public void makeCompact()
+        {
+        taskProgressBar.setVisibility(View.VISIBLE);
+        bottomText.setVisibility(View.GONE);
+        taskProgressBar2.setVisibility(View.GONE);
+        statsLayout.setVisibility(View.GONE);
+        nonButton.setVisibility(View.VISIBLE);
+
+    }
+    public void makeBig()
+    {
+        bottomText.setVisibility(View.VISIBLE);
+        taskProgressBar2.setVisibility(View.VISIBLE);
+        statsLayout.setVisibility(View.VISIBLE);
+        nonButton.setVisibility(View.GONE);
+        taskProgressBar.setVisibility(View.GONE);
+
+    }
 
 }
