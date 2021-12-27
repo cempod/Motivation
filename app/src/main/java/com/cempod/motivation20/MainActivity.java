@@ -8,14 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -68,6 +71,8 @@ notifyAdapter(recyclerView);
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LocalBroadcastManager.getInstance(this).registerReceiver(counterReceiver,
+                new IntentFilter("count_change"));
         addTaskButton = (Button) findViewById(R.id.addTaskButton) ;
         progressBarLayout = (ConstraintLayout) findViewById(R.id.progressBarLayout);
         mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
@@ -239,5 +244,14 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
         taskProgressBar.setVisibility(View.GONE);
 
     }
+
+    private BroadcastReceiver counterReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("count");
+            notifyAdapter(recyclerView);
+        }
+    };
 
 }

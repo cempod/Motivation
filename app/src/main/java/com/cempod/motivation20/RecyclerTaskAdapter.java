@@ -52,6 +52,10 @@ this.everyday = everyday;
         notifyItemRemoved(position);
         manager.deleteTask(taskList.get(position),everyday);
         taskList.remove(position);
+        Intent intent = new Intent("count_change");
+        // You can also include some extra data.
+        intent.putExtra("count", "change");
+        LocalBroadcastManager.getInstance(recyclerView.getContext()).sendBroadcast(intent);
     }
 
     public interface RowType {
