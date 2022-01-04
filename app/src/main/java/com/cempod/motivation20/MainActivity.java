@@ -51,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Day> month = new ArrayList<Day>();
     Button addTaskButton  ;
     BottomNavigationView bottomNavigationView;
-    ConstraintLayout progressBarLayout;
+    //ConstraintLayout progressBarLayout;
     ConstraintLayout mainLayout;
     ConstraintLayout progressCardLayout;
-    ConstraintLayout statsLayout;
+   // ConstraintLayout statsLayout;
     ConstraintLayout calendarNavigation;
     LinearProgressIndicator taskProgressBar;
     CircularProgressIndicator taskProgressBar2;
     TextView bottomText;
-    Button nonButton;
+    //Button nonButton;
     RecyclerView recyclerView;
     ItemListManager manager;
     CalendarManager calendarManager;
@@ -79,14 +79,14 @@ notifyAdapter(recyclerView);
         LocalBroadcastManager.getInstance(this).registerReceiver(counterReceiver,
                 new IntentFilter("count_change"));
         addTaskButton = (Button) findViewById(R.id.addTaskButton) ;
-        progressBarLayout = (ConstraintLayout) findViewById(R.id.progressBarLayout);
+        //progressBarLayout = (ConstraintLayout) findViewById(R.id.progressBarLayout);
         mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
         progressCardLayout = (ConstraintLayout) findViewById(R.id.progressCardLayout);
-        statsLayout = (ConstraintLayout) findViewById(R.id.statsLayout);
+       // statsLayout = (ConstraintLayout) findViewById(R.id.statsLayout);
         taskProgressBar = (LinearProgressIndicator) findViewById(R.id.taskProgressBar);
         taskProgressBar2 = (CircularProgressIndicator) findViewById(R.id.taskProgressBar2) ;
         bottomText = (TextView) findViewById(R.id.bottomText);
-        nonButton = (Button) findViewById(R.id.nonButton);
+       // nonButton = (Button) findViewById(R.id.nonButton);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomMenu);
         recyclerView = findViewById(R.id.recyclerView);
         calendarNavigation = (ConstraintLayout) findViewById(R.id.calendarNavigation);
@@ -247,20 +247,20 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
 
         public void makeCompact()
         {
-        taskProgressBar.setVisibility(View.VISIBLE);
-        bottomText.setVisibility(View.GONE);
-        taskProgressBar2.setVisibility(View.GONE);
-        statsLayout.setVisibility(View.GONE);
-        nonButton.setVisibility(View.VISIBLE);
+       // taskProgressBar.setVisibility(View.VISIBLE);
+       // bottomText.setVisibility(View.GONE);
+       // taskProgressBar2.setVisibility(View.GONE);
+       // statsLayout.setVisibility(View.GONE);
+       // nonButton.setVisibility(View.VISIBLE);
 
     }
     public void makeBig()
     {
-        bottomText.setVisibility(View.VISIBLE);
-        taskProgressBar2.setVisibility(View.VISIBLE);
-        statsLayout.setVisibility(View.VISIBLE);
-        nonButton.setVisibility(View.GONE);
-        taskProgressBar.setVisibility(View.GONE);
+      //  bottomText.setVisibility(View.VISIBLE);
+       // taskProgressBar2.setVisibility(View.VISIBLE);
+       // statsLayout.setVisibility(View.VISIBLE);
+      //  nonButton.setVisibility(View.GONE);
+      //  taskProgressBar.setVisibility(View.GONE);
 
     }
 
@@ -268,7 +268,7 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
         progressCardLayout.post(new Runnable() {
             @Override
             public void run() {
-                recyclerView.setPadding(0,progressBarLayout.getHeight(),0,0);
+         //       recyclerView.setPadding(0,progressBarLayout.getHeight(),0,0);
             }
         });
     }
