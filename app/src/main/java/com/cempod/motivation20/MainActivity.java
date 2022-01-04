@@ -81,7 +81,7 @@ notifyAdapter(recyclerView);
         addTaskButton = (Button) findViewById(R.id.addTaskButton) ;
         //progressBarLayout = (ConstraintLayout) findViewById(R.id.progressBarLayout);
         mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
-        progressCardLayout = (ConstraintLayout) findViewById(R.id.progressCardLayout);
+       // progressCardLayout = (ConstraintLayout) findViewById(R.id.progressCardLayout);
        // statsLayout = (ConstraintLayout) findViewById(R.id.statsLayout);
         taskProgressBar = (LinearProgressIndicator) findViewById(R.id.taskProgressBar);
         taskProgressBar2 = (CircularProgressIndicator) findViewById(R.id.taskProgressBar2) ;
@@ -264,13 +264,8 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
 
     }
 
-    public void setPadding(){
-        progressCardLayout.post(new Runnable() {
-            @Override
-            public void run() {
-         //       recyclerView.setPadding(0,progressBarLayout.getHeight(),0,0);
-            }
-        });
+    public void setPadding() {
+
     }
 
     private BroadcastReceiver counterReceiver = new BroadcastReceiver() {
