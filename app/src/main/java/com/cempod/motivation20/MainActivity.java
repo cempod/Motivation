@@ -51,15 +51,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Day> month = new ArrayList<Day>();
     Button addTaskButton  ;
     BottomNavigationView bottomNavigationView;
-    //ConstraintLayout progressBarLayout;
     ConstraintLayout mainLayout;
-    ConstraintLayout progressCardLayout;
-   // ConstraintLayout statsLayout;
     ConstraintLayout calendarNavigation;
     LinearProgressIndicator taskProgressBar;
     CircularProgressIndicator taskProgressBar2;
     TextView bottomText;
-    //Button nonButton;
+    Button nonButton;
     RecyclerView recyclerView;
     ItemListManager manager;
     CalendarManager calendarManager;
@@ -109,9 +106,6 @@ addTaskButton.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-       // recyclerView.setPaddingRelative(0,300,0,0);
-
-    setPadding();
 
 RecyclerTaskAdapter todayAdapter = new RecyclerTaskAdapter(todayList, recyclerView, false);
 RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recyclerView, true);
@@ -120,22 +114,6 @@ RecyclerCalendarAdapter calendarAdapter = new RecyclerCalendarAdapter(month, Mai
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
-recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-    @Override
-    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-        super.onScrolled(recyclerView, dx, dy);
-
-        if(linearLayoutManager.findFirstVisibleItemPosition() > 1 && taskProgressBar2.getVisibility()==View.VISIBLE){
-            makeCompact();
-        }
-        if(linearLayoutManager.findFirstVisibleItemPosition() ==0  && taskProgressBar2.getVisibility()==View.GONE){
-          makeBig();
-        }
-
-    }
-});
 
 manager = new ItemListManager(todayList,everydayList,this);
 calendarManager = new CalendarManager(month, recyclerView);
@@ -153,63 +131,32 @@ recyclerView.setAdapter(todayAdapter);
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.action_today&&bottomNavigationView.getSelectedItemId()!=R.id.action_today){
 item.setChecked(true);
-if(progressCardLayout.getVisibility()==View.VISIBLE)
-                    {
+
                         TransitionManager.beginDelayedTransition(mainLayout);
                         recyclerView.setAdapter(todayAdapter);
                         calendarNavigation.setVisibility(View.GONE);
                         topAppbar.setTitle("СЕГОДНЯ");
-                        makeBig();
-                        setPadding();
+
                         notifyAdapter(recyclerView);
-                    }
-else{
-    TransitionManager.beginDelayedTransition(mainLayout);
-    recyclerView.setAdapter(todayAdapter);
-    calendarNavigation.setVisibility(View.GONE);
-    topAppbar.setTitle("СЕГОДНЯ");
-    makeBig();
-    setPadding();
-    progressCardLayout.setVisibility(View.VISIBLE);
-    notifyAdapter(recyclerView);
-}
+
+
                 }
-                if(item.getItemId()==R.id.action_everyday&&bottomNavigationView.getSelectedItemId()!=R.id.action_everyday){
+                if(item.getItemId()==R.id.action_everyday&&bottomNavigationView.getSelectedItemId()!=R.id.action_everyday) {
                     item.setChecked(true);
-                    if(progressCardLayout.getVisibility()==View.VISIBLE) {
-                        setPadding();
-                        TransitionManager.beginDelayedTransition(mainLayout);
-                        recyclerView.setAdapter(everydayAdapter);
-                        calendarNavigation.setVisibility(View.GONE);
-                        topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
-                        makeBig();
 
-                        notifyAdapter(recyclerView);
-                    }
-                    else{
-                        setPadding();
-                        TransitionManager.beginDelayedTransition(mainLayout);
-                        recyclerView.setAdapter(everydayAdapter);
-                        calendarNavigation.setVisibility(View.GONE);
-
-                        progressCardLayout.setVisibility(View.VISIBLE);
-                        topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
-                        makeBig();
-
-                        notifyAdapter(recyclerView);
-                    }
+                    TransitionManager.beginDelayedTransition(mainLayout);
+                    recyclerView.setAdapter(everydayAdapter);
+                    calendarNavigation.setVisibility(View.GONE);
+                    topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
                 }
                 if(item.getItemId()==R.id.action_calendar&&bottomNavigationView.getSelectedItemId()!=R.id.action_calendar){
                     item.setChecked(true);
                     TransitionManager.beginDelayedTransition(mainLayout);
-
-                            recyclerView.setPadding(0,0,0,0);
-
                     topAppbar.setTitle("КАЛЕНДАРЬ");
                     calendarNavigation.setVisibility(View.VISIBLE);
                     calendarManager.loadMonth(new Date());
                     recyclerView.setAdapter(calendarAdapter);
-                    progressCardLayout.setVisibility(View.GONE);
+
 
                     Calendar calendar = new GregorianCalendar();
                     recyclerView.scrollToPosition(calendar.get(Calendar.DATE)-1);
@@ -244,29 +191,6 @@ bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayLi
         super.onBackPressed();
     }
 
-
-        public void makeCompact()
-        {
-       // taskProgressBar.setVisibility(View.VISIBLE);
-       // bottomText.setVisibility(View.GONE);
-       // taskProgressBar2.setVisibility(View.GONE);
-       // statsLayout.setVisibility(View.GONE);
-       // nonButton.setVisibility(View.VISIBLE);
-
-    }
-    public void makeBig()
-    {
-      //  bottomText.setVisibility(View.VISIBLE);
-       // taskProgressBar2.setVisibility(View.VISIBLE);
-       // statsLayout.setVisibility(View.VISIBLE);
-      //  nonButton.setVisibility(View.GONE);
-      //  taskProgressBar.setVisibility(View.GONE);
-
-    }
-
-    public void setPadding() {
-
-    }
 
     private BroadcastReceiver counterReceiver = new BroadcastReceiver() {
         @Override
