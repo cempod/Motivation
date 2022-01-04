@@ -70,8 +70,9 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text=""
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/taskProgressBar">
 
@@ -83,6 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="visible"
+            android:background="#00000011"
             app:layout_constraintBottom_toTopOf="@+id/addTaskButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/taskProgressBar2"
