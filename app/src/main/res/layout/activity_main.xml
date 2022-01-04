@@ -55,11 +55,12 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
 
         android:layout_height="0dp"
+        app:layoutDescription="@xml/activity_main_xml_mainlayout_scene"
         app:layout_constraintBottom_toTopOf="@id/bottomMenu"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
         tools:context=".MainActivity">
@@ -181,7 +182,7 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:progress="34"
-            android:visibility="visible"
+            android:visibility="gone"
 
             app:indicatorColor="?attr/colorSecondary"
             app:indicatorSize="100dp"
@@ -279,6 +280,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
