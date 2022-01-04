@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     Button addTaskButton  ;
     BottomNavigationView bottomNavigationView;
     ConstraintLayout mainLayout;
+    ConstraintLayout mainActivityLayout;
     ConstraintLayout calendarNavigation;
     LinearProgressIndicator taskProgressBar;
     CircularProgressIndicator taskProgressBar2;
@@ -78,6 +79,7 @@ notifyAdapter(recyclerView);
         addTaskButton = (Button) findViewById(R.id.addTaskButton) ;
         //progressBarLayout = (ConstraintLayout) findViewById(R.id.progressBarLayout);
         mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        mainActivityLayout = (ConstraintLayout) findViewById(R.id.mainActivityLayout);
        // progressCardLayout = (ConstraintLayout) findViewById(R.id.progressCardLayout);
        // statsLayout = (ConstraintLayout) findViewById(R.id.statsLayout);
         taskProgressBar = (LinearProgressIndicator) findViewById(R.id.taskProgressBar);
