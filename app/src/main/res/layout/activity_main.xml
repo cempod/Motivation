@@ -64,6 +64,19 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
         tools:context=".MainActivity">
 
+        <Button
+            android:id="@+id/nonButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/taskProgressBar">
+
+
+        </Button>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/statsLayout"
             android:layout_width="0dp"
@@ -72,7 +85,7 @@
             app:layout_constraintBottom_toTopOf="@+id/addTaskButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/taskProgressBar2"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/taskProgressBar">
 
             <TextView
                 android:id="@+id/textView4"
@@ -123,7 +136,7 @@
             android:layout_marginEnd="8dp"
             android:text="Добавить задачу"
             android:transitionName="animbtn"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="@+id/taskProgressBar2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/taskProgressBar2" />
 
@@ -158,21 +171,6 @@
                 app:layout_constraintStart_toStartOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <Button
-                android:id="@+id/nonButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/taskProgressBar2"
-                app:layout_constraintEnd_toEndOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toTopOf="@+id/taskProgressBar2">
-
-
-            </Button>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -183,7 +181,7 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:progress="34"
-            android:visibility="gone"
+            android:visibility="visible"
 
             app:indicatorColor="?attr/colorSecondary"
             app:indicatorSize="100dp"
@@ -204,7 +202,7 @@
             app:indicatorColor="?attr/colorSecondary"
             app:indicatorSize="100dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskProgressBar"
             app:trackColor="?attr/colorOutline" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -220,7 +218,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskProgressBar2">
+            app:layout_constraintTop_toBottomOf="@+id/addTaskButton">
 
         </androidx.recyclerview.widget.RecyclerView>
 
