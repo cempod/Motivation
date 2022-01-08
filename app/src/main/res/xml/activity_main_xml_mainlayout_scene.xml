@@ -129,5 +129,21 @@
             android:layout_width="0dp"
             motion:layout_constraintTop_toBottomOf="@+id/addTaskButton"
             android:id="@+id/recyclerView" />
+        <Constraint
+            android:id="@+id/bottomText"
+            motion:layout_constraintEnd_toEndOf="@+id/progressBarLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            motion:layout_constraintTop_toBottomOf="@+id/progressBarLayout"
+            motion:layout_constraintStart_toStartOf="@+id/progressBarLayout" />
+        <Constraint
+            android:id="@+id/bottomText"
+            motion:layout_constraintEnd_toEndOf="@+id/progressBarLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            motion:layout_constraintTop_toBottomOf="@+id/progressBarLayout"
+            motion:layout_constraintStart_toStartOf="@+id/progressBarLayout" />
     </ConstraintSet>
 </MotionScene>
