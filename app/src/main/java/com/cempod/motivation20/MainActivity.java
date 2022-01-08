@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -51,14 +52,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Day> month = new ArrayList<Day>();
     Button addTaskButton  ;
     BottomNavigationView bottomNavigationView;
-    ConstraintLayout mainLayout;
-    ConstraintLayout mainActivityLayout;
+    MotionLayout mainLayout;
+    ConstraintLayout calendarLayout;
     ConstraintLayout calendarNavigation;
     LinearProgressIndicator taskProgressBar;
     CircularProgressIndicator taskProgressBar2;
     TextView bottomText;
     Button nonButton;
     RecyclerView recyclerView;
+    RecyclerView calendarRecyclerView;
     ItemListManager manager;
     CalendarManager calendarManager;
 
@@ -78,8 +80,8 @@ notifyAdapter(recyclerView);
                 new IntentFilter("count_change"));
         addTaskButton = (Button) findViewById(R.id.addTaskButton) ;
         //progressBarLayout = (ConstraintLayout) findViewById(R.id.progressBarLayout);
-        mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
-        mainActivityLayout = (ConstraintLayout) findViewById(R.id.mainActivityLayout);
+        mainLayout = (MotionLayout) findViewById(R.id.mainLayout);
+        calendarLayout = (ConstraintLayout) findViewById(R.id.calendarLayout);
        // progressCardLayout = (ConstraintLayout) findViewById(R.id.progressCardLayout);
        // statsLayout = (ConstraintLayout) findViewById(R.id.statsLayout);
         taskProgressBar = (LinearProgressIndicator) findViewById(R.id.taskProgressBar);
@@ -88,6 +90,7 @@ notifyAdapter(recyclerView);
        // nonButton = (Button) findViewById(R.id.nonButton);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomMenu);
         recyclerView = findViewById(R.id.recyclerView);
+        calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         calendarNavigation = (ConstraintLayout) findViewById(R.id.calendarNavigation);
 
 
@@ -114,8 +117,9 @@ RecyclerTaskAdapter everydayAdapter = new RecyclerTaskAdapter(everydayList, recy
 RecyclerCalendarAdapter calendarAdapter = new RecyclerCalendarAdapter(month, MainActivity.this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager calendarLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+calendarRecyclerView.setLayoutManager(calendarLayoutManager);
 
 manager = new ItemListManager(todayList,everydayList,this);
 calendarManager = new CalendarManager(month, recyclerView);
@@ -132,6 +136,11 @@ recyclerView.setAdapter(todayAdapter);
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.action_today&&bottomNavigationView.getSelectedItemId()!=R.id.action_today){
+                    if(bottomNavigationView.getSelectedItemId()==R.id.action_calendar){
+                        TransitionManager.beginDelayedTransition(mainLayout);
+                        calendarLayout.setVisibility(View.GONE);
+                        mainLayout.setVisibility(View.VISIBLE);
+                    }
 item.setChecked(true);
 
                         TransitionManager.beginDelayedTransition(mainLayout);
@@ -144,24 +153,32 @@ item.setChecked(true);
 
                 }
                 if(item.getItemId()==R.id.action_everyday&&bottomNavigationView.getSelectedItemId()!=R.id.action_everyday) {
+                    if(bottomNavigationView.getSelectedItemId()==R.id.action_calendar){
+                        TransitionManager.beginDelayedTransition(mainLayout);
+                        calendarLayout.setVisibility(View.GONE);
+                        mainLayout.setVisibility(View.VISIBLE);
+                    }
                     item.setChecked(true);
 
                     TransitionManager.beginDelayedTransition(mainLayout);
                     recyclerView.setAdapter(everydayAdapter);
                     calendarNavigation.setVisibility(View.GONE);
+
                     topAppbar.setTitle("КАЖДЫЙ ДЕНЬ");
                 }
                 if(item.getItemId()==R.id.action_calendar&&bottomNavigationView.getSelectedItemId()!=R.id.action_calendar){
                     item.setChecked(true);
-                    TransitionManager.beginDelayedTransition(mainLayout);
+                    TransitionManager.beginDelayedTransition(calendarLayout);
+                    mainLayout.setVisibility(View.GONE);
+                    calendarLayout.setVisibility(View.VISIBLE);
                     topAppbar.setTitle("КАЛЕНДАРЬ");
                     calendarNavigation.setVisibility(View.VISIBLE);
                     calendarManager.loadMonth(new Date());
-                    recyclerView.setAdapter(calendarAdapter);
+                    calendarRecyclerView.setAdapter(calendarAdapter);
 
 
                     Calendar calendar = new GregorianCalendar();
-                    recyclerView.scrollToPosition(calendar.get(Calendar.DATE)-1);
+                    calendarRecyclerView.scrollToPosition(calendar.get(Calendar.DATE)-1);
 
                     Toast toast = Toast.makeText(getApplicationContext(),Integer.toString(calendar.get(Calendar.DATE)-1),Toast.LENGTH_SHORT);
                    // toast.show();
