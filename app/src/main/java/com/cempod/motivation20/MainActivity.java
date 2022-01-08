@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView calendarRecyclerView;
     ItemListManager manager;
     CalendarManager calendarManager;
+    TextView todayTaskText;
+    TextView completeTaskText;
 
        ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                new ActivityResultCallback<ActivityResult>() {
@@ -92,6 +94,8 @@ notifyAdapter(recyclerView);
         recyclerView = findViewById(R.id.recyclerView);
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         calendarNavigation = (ConstraintLayout) findViewById(R.id.calendarNavigation);
+        todayTaskText = (TextView)findViewById(R.id.todayTaskText);
+        completeTaskText = (TextView)findViewById(R.id.completeTaskText);
 
 
 
@@ -199,6 +203,7 @@ item.setChecked(true);
 recyclerView.getAdapter().notifyDataSetChanged();
 bottomNavigationView.getOrCreateBadge(R.id.action_today).setNumber(todayList.size());
 bottomNavigationView.getOrCreateBadge(R.id.action_everyday).setNumber(everydayList.size());
+todayTaskText.setText(Integer.toString(todayList.size())+"/"+Integer.toString(everydayList.size()));
     }
     }
 
